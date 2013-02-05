@@ -1,6 +1,7 @@
-﻿namespace FSCL.Compiler.Processors
+﻿namespace FSCL.Compiler.StructHandling
 
 open FSCL.Compiler
+open FSCL.Compiler.FunctionPrettyPrinting
 open Microsoft.FSharp.Quotations
 open System.Collections.Generic
 open System.Reflection
@@ -10,7 +11,8 @@ open System.Reflection
                 [| "FSCL_DECLARATION_PRETTY_PRINTING_PROCESSOR" |])>] 
 type StructPrinter() =                 
     interface FunctionBodyPrettyPrintingProcessor with
-        member this.Handle(expr, engine:FunctionPrettyPrintingStep) =
+        member this.Process(expr, en) =
+            let engine = en :?> FunctionPrettyPrintingStep
             match expr with
             | Patterns.Let(v, value, body) ->
                 match value with

@@ -1,6 +1,7 @@
-﻿namespace FSCL.Compiler.Processors
+﻿namespace FSCL.Compiler.StructHandling
 
 open FSCL.Compiler
+open FSCL.Compiler.FunctionPrettyPrinting
 open Microsoft.FSharp.Quotations
 open System.Collections.Generic
 open System.Reflection
@@ -9,7 +10,7 @@ open System.Reflection
 type StructAccessPrinter() =                 
     interface FunctionBodyPrettyPrintingProcessor with
         member this.Process(expr, en) =
-            let engine = en :?> 
+            let engine = en :?> FunctionPrettyPrintingStep
             match expr with
             | Patterns.PropertyGet(e, propertyInfo, args) ->
                 if e.IsSome then

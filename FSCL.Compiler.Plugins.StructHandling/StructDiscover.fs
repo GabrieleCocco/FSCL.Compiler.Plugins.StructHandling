@@ -1,6 +1,7 @@
-﻿namespace FSCL.Compiler.Processors
+﻿namespace FSCL.Compiler.StructHandling
 
 open FSCL.Compiler
+open FSCL.Compiler.ModulePreprocessing
 open System.Collections.Generic
 open System.Reflection
 open Microsoft.FSharp.Quotations
@@ -31,7 +32,8 @@ type StructDiscover() =
             List.iter(fun (e:Expr) -> CollectStructs(e, structs)) l
 
     interface ModulePreprocessingProcessor with
-        member this.Handle(km, engine) =
+        member this.Process(km, en) =
+            let engine = en :?> ModulePreprocessingStep
             let structsDict = new Dictionary<Type, unit>()
             CollectStructs(km.Source.Body, structsDict)
             // Store the struct types inside kernel module as a flat list
